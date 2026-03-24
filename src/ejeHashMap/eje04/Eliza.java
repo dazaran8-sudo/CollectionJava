@@ -1,5 +1,7 @@
 package ejeHashMap.eje04;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -16,13 +18,25 @@ public class Eliza {
 		map.put("NOMBRE", "Mi nombre es Eliza");
 		
 		String msgDefault ="Lo siento, no te comprendo";
+		String msgBloqueado= "No eres muy educado";
 		
+		var listapalabraBloquear= new ArrayList<String> (Arrays.asList("caca", "culo", "pedo", "pis"));
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Bienvenido al sistema Eliza 0.0");
 		String frase;
 		boolean fin =false;
 		do {
 			frase = sc.nextLine();
+			
+			boolean correcto=true;
+			for (String valor:listapalabraBloquear) {
+				if (frase.contains(valor)) {
+					System.out.println(msgBloqueado+">"+valor.toUpperCase()+"<");
+					break;
+				}
+			}
+			
+			if (correcto) {
 			boolean encontrada = false;
 			for (String clave:map.keySet()) {
 				if(frase.toUpperCase().contains(clave)) {
@@ -34,7 +48,12 @@ public class Eliza {
 					break;
 				}
 			}
+			if (!encontrada) {
+				System.out.println(msgDefault);
+			}
+			}
 		} while (!fin);
 		System.out.println("Muchas gracias por conectarse");
-	}
+}
+	
 }
